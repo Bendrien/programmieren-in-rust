@@ -2,6 +2,20 @@
 
 fn main() {
     // TODO: Task 1c)
+    let mut state = read_input();
+    let mut str = String::with_capacity(state.len());
+    loop {
+        for cell in state.iter() {
+            match *cell {
+                true => str.push('█'),
+                false => str.push(' '),
+            }
+        }
+        println!("{}", str);
+        str.clear();
+        std::thread::sleep(std::time::Duration::from_millis(16));
+        state = next_step(&state);
+    }
 }
 
 /// Reads a valid initial configuration for our automaton from the terminal.
@@ -38,9 +52,28 @@ fn read_input() -> Vec<bool> {
     };
 
     // TODO: Task 1a)
+    let mut v = Vec::with_capacity(input.len());
+    for c in input.chars() {
+        match c {
+            '0' => v.push(false),
+            '1' => v.push(true),
+            _ => panic!("Wrong inputdata!"),
+        }
+    }
+    v
 }
 
 // TODO: Task 1b)
+fn next_step(state: &[bool]) -> Vec<bool> {
+    let len = state.len();
+    let mut v = Vec::with_capacity(len);
+    let left_neighbor  = state.iter().cycle().skip(len-1).take(len);
+    let right_neighbor = state.iter().cycle().skip(1).take(len);
+    for (l, r) in left_neighbor.zip(right_neighbor) {
+        v.push(*l ^ *r);
+    }
+    v
+}
 
 #[test]
 fn rule90_rules() {
