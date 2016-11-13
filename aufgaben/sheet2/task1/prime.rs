@@ -1,7 +1,28 @@
 //! Aufgabe 2.1: Primzahltest
 
-fn main() {
+fn is_prime(number: usize) -> bool {
+    if number <= 1 {
+        false
+    } else if number <= 3 {
+        true
+    } else if number % 2 == 0
+           || number % 3 == 0 {
+        false
+    } else {
+        let mut i = 5;
+        let mut w = 2;
 
+        while i * i <= number {
+            if number % i == 0 {
+                return false
+            }
+
+            i += w;
+            w = 6 - w;
+        }
+
+        true
+    }
 }
 
 #[test]

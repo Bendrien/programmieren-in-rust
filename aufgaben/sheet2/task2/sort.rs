@@ -6,6 +6,14 @@ fn main() {
 }
 
 // TODO: write `sort()` function
+fn sort(arr: &mut [u64]) {
+    let len = arr.len();
+    for i in 0..len {
+        let min = (i..len).min_by_key(|x| arr[*x])
+            .unwrap();
+        arr.swap(min, i);
+    }
+}
 
 
 #[test]
