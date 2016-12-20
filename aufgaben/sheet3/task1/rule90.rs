@@ -13,7 +13,7 @@ fn main() {
         }
         println!("{}", str);
         str.clear();
-        std::thread::sleep(std::time::Duration::from_millis(16));
+        std::thread::sleep(std::time::Duration::from_millis(500));
         state = next_step(&state);
     }
 }
@@ -70,7 +70,7 @@ fn next_step(state: &[bool]) -> Vec<bool> {
     let left_neighbor  = state.iter().cycle().skip(len-1).take(len);
     let right_neighbor = state.iter().cycle().skip(1).take(len);
     for (l, r) in left_neighbor.zip(right_neighbor) {
-        v.push(*l ^ *r);
+        v.push((!*l ^ !*r));
     }
     v
 }
